@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Idea from '../../Images/idea.png';
+
 import { 
   Home as HomeIcon, 
   LineChart, 
@@ -55,7 +55,7 @@ const Header = () => {
           </button>
 
           <Link to="/" className="flex items-center space-x-2">
-            <img src={Idea} alt="Idea Icon" className="h-12 w-12" />
+            <img src="/Images/idea.png" alt="Idea Icon" className="h-12 w-12" />
             <span className="font-bold text-xl text-[#090518]">
               Project <span className="text-[#f5f4f2]">Portal</span>
             </span>

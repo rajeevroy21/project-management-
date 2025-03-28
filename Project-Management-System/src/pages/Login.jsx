@@ -121,7 +121,7 @@ const Login = () => {
                   }`}
                 >
                  <img 
-  src={"/Images/Student.jpeg"} 
+  src="/Images/student.jpeg"
   alt="Student" 
   className="h-20 w-20 rounded-full object-cover"
 />
@@ -139,7 +139,7 @@ const Login = () => {
   }`}
 >
   <img 
-    src={"/Images/faculty.jpeg"} 
+    src="/Images/faculty.jpeg"
     alt="Faculty" 
     className="h-20 w-20 rounded-full object-cover"
   />

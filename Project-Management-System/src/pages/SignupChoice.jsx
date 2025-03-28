@@ -27,7 +27,7 @@ const SignupChoice = () => {
           >
             <div className="p-4 bg-indigo-100 rounded-full mb-4">
             <img 
-    src={"/Images/student.jpeg"} 
+    src="/Images/student.jpeg"
     alt="Faculty" 
     className="h-20 w-20 rounded-full object-cover"
   />
@@ -45,7 +45,7 @@ const SignupChoice = () => {
           >
             <div className="p-4 bg-indigo-100 rounded-full mb-4">
             <img 
-    src={"/Images/faculty.jpeg"} 
+    src="/Images/faculty.jpeg"
     alt="Faculty" 
     className="h-20 w-20 rounded-full object-cover"
   />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { X, Users, Award, ChevronRight, PieChart, ShieldAlert, Search, CheckCircle, Clock, BarChart, Download } from 'lucide-react';
-import Image from '../../Images/6763395.webp';
 
 function App() {
   const [batches, setBatches] = useState({});
@@ -668,7 +667,7 @@ function App() {
         textAlign: "center"        
       }}>
         <img 
-          src={Image} 
+          src="/Images/6763395.webp"  
           alt="Error" 
           style={{ width: "320px", marginBottom: "20px" }} 
         />

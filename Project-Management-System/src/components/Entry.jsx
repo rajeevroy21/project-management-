@@ -1,6 +1,6 @@
 import React from 'react';
 import Typewriter from 'typewriter-effect';
-import ProjectImage from '../../Images/project.jpg';  // Adjust the path as necessary
+ // Adjust the path as necessary
  // Adjust the path as necessary
 const VignanPortalSection = () => {
   return (
@@ -48,7 +48,7 @@ const VignanPortalSection = () => {
         {/* Right Side: Larger Image */}
         <div className="flex-1 flex justify-center">
           <img 
-            src={ProjectImage} 
+            src="/Images/project.jpg" 
             alt="Project Management" 
             className="w-full max-w-lg rounded-lg "  /* Larger image with shadow */
           />
