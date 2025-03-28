@@ -50,7 +50,7 @@ const StudentCard = () => {
         setUserId(id);
         setLoading(true);
 
-        fetch("https://my-backend-api-ypqu.onrender.com/api/alloc/getBatches")
+        fetch("https://api-project-management-kjbr.onrender.com/api/alloc/getBatches")
             .then((res) => res.json())
             .then((data) => {
                 setBatches(data.batches);
@@ -65,7 +65,7 @@ const StudentCard = () => {
 
     useEffect(() => {
         if (selectedBatch) {
-            fetch(`https://my-backend-api-ypqu.onrender.com/api/final/faculty/batch/${selectedBatch}`)
+            fetch(`https://api-project-management-kjbr.onrender.com/api/final/faculty/batch/${selectedBatch}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.allocatedGuide) {
@@ -74,7 +74,7 @@ const StudentCard = () => {
                 })
                 .catch(error => console.error("Error fetching guide:", error));
 
-            fetch(`https://my-backend-api-ypqu.onrender.com/api/review/reviews/${selectedBatch}`)
+            fetch(`https://api-project-management-kjbr.onrender.com/api/review/reviews/${selectedBatch}`)
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.reviews) {
@@ -98,7 +98,7 @@ const StudentCard = () => {
 
     useEffect(() => {
         if (selectedBatch) {
-            fetch(`https://my-backend-api-ypqu.onrender.com/api/update/getTitle/${selectedBatch}`)
+            fetch(`https://api-project-management-kjbr.onrender.com/api/update/getTitle/${selectedBatch}`)
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.title) {
@@ -197,7 +197,7 @@ const StudentCard = () => {
             name: batchTitle,
         };
 
-        fetch(`https://my-backend-api-ypqu.onrender.com/api/update/getTitle/${selectedBatch}`, {
+        fetch(`https://api-project-management-kjbr.onrender.com/api/update/getTitle/${selectedBatch}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -209,7 +209,7 @@ const StudentCard = () => {
                     setMessage("Title updated successfully!");
                     setBatchTitle("");
 
-                    fetch(`https://my-backend-api-ypqu.onrender.com/api/update/getTitle/${selectedBatch}`)
+                    fetch(`https://api-project-management-kjbr.onrender.com/api/update/getTitle/${selectedBatch}`)
                         .then((res) => res.json())
                         .then((data) => {
                             if (data.title) {
@@ -218,7 +218,7 @@ const StudentCard = () => {
                         })
                         .catch((error) => console.error("Error fetching updated title:", error));
 
-                    fetch("https://my-backend-api-ypqu.onrender.com/api/alloc/getBatches")
+                    fetch("https://api-project-management-kjbr.onrender.com/api/alloc/getBatches")
                         .then((res) => res.json())
                         .then((data) => {
                             setBatches(data.batches);

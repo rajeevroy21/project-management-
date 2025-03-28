@@ -51,7 +51,7 @@ function App() {
   const handleResetAttendance = async () => {
     if (window.confirm('Are you sure you want to reset all attendance data? This action cannot be undone.')) {
       try {
-        const response = await fetch('https://my-backend-api-ypqu.onrender.com/api/attendance/delete-all', {
+        const response = await fetch('https://api-project-management-kjbr.onrender.com/api/attendance/delete-all', {
           method: 'DELETE'
         });
 
@@ -82,7 +82,7 @@ function App() {
       const role = localStorage.getItem("userRole") || "coordinator";
       setUserRole(role);
 
-      const batchesResponse = await fetch("https://my-backend-api-ypqu.onrender.com/api/alloc/getBatches");
+      const batchesResponse = await fetch("https://api-project-management-kjbr.onrender.com/api/alloc/getBatches");
       if (!batchesResponse.ok) {
         throw new Error('Failed to fetch batches');
       }
@@ -98,7 +98,7 @@ function App() {
       }
 
       try {
-        const sectionsResponse = await fetch("https://my-backend-api-ypqu.onrender.com/api/section/getSections");
+        const sectionsResponse = await fetch("https://api-project-management-kjbr.onrender.com/api/section/getSections");
         if (!sectionsResponse.ok) {
           throw new Error('Failed to fetch sections');
         }
@@ -128,7 +128,7 @@ function App() {
   const handleAttendanceClick = async () => {
     setIsAttendanceModalOpen(true);
     try {
-      const studentsResponse = await fetch("https://my-backend-api-ypqu.onrender.com/api/students");
+      const studentsResponse = await fetch("https://api-project-management-kjbr.onrender.com/api/students");
       if (!studentsResponse.ok) {
         throw new Error('Failed to fetch students');
       }
@@ -140,7 +140,7 @@ function App() {
       });
       setAttendanceData(initialAttendance);
 
-      const attendanceResponse = await fetch(`https://my-backend-api-ypqu.onrender.com/api/attendance/get/${selectedDate}`);
+      const attendanceResponse = await fetch(`https://api-project-management-kjbr.onrender.com/api/attendance/get/${selectedDate}`);
       if (!attendanceResponse.ok) {
         throw new Error('Failed to fetch attendance');
       }
@@ -163,7 +163,7 @@ function App() {
 
   const downloadAttendance = async () => {
     try {
-      const studentsResponse = await fetch("https://my-backend-api-ypqu.onrender.com/api/students");
+      const studentsResponse = await fetch("https://api-project-management-kjbr.onrender.com/api/students");
       if (!studentsResponse.ok) {
         throw new Error("Failed to fetch students");
       }
@@ -181,7 +181,7 @@ function App() {
   
       for (const regdNo of students) {
         try {
-          const attendanceResponse = await fetch(`https://my-backend-api-ypqu.onrender.com/api/attendance/student/first/${regdNo}`);
+          const attendanceResponse = await fetch(`https://api-project-management-kjbr.onrender.com/api/attendance/student/first/${regdNo}`);
           
           if (!attendanceResponse.ok) {
             throw new Error(`Failed to fetch attendance for ${regdNo}`);
@@ -216,7 +216,7 @@ function App() {
   
   const fetchAttendance = async (date) => {
     try {
-      const response = await fetch(`https://my-backend-api-ypqu.onrender.com/api/attendance/get/${date}`);
+      const response = await fetch(`https://api-project-management-kjbr.onrender.com/api/attendance/get/${date}`);
       if (!response.ok) {
         throw new Error('Failed to fetch attendance');
       }
@@ -252,7 +252,7 @@ function App() {
         }
       });
 
-      const response = await fetch("https://my-backend-api-ypqu.onrender.com/api/attendance/mark", {
+      const response = await fetch("https://api-project-management-kjbr.onrender.com/api/attendance/mark", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -360,7 +360,7 @@ function App() {
         .filter(batchNumber => batchNumber && batchNumber !== "-")
         .map(async batchNumber => {
           try {
-            const response = await fetch(`https://my-backend-api-ypqu.onrender.com/api/final/faculty/batch/${batchNumber}`);
+            const response = await fetch(`https://api-project-management-kjbr.onrender.com/api/final/faculty/batch/${batchNumber}`);
             if (!response.ok) {
               throw new Error(`Failed to fetch guide for batch ${batchNumber}`);
             }
@@ -398,7 +398,7 @@ function App() {
 
   const fetchReviews = async (batchNumber) => {
     try {
-      const response = await fetch(`https://my-backend-api-ypqu.onrender.com/api/review/reviews/${batchNumber}`);
+      const response = await fetch(`https://api-project-management-kjbr.onrender.com/api/review/reviews/${batchNumber}`);
       if (!response.ok) {
         throw new Error('Failed to fetch reviews');
       }
@@ -462,7 +462,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("https://my-backend-api-ypqu.onrender.com/api/review/reviews", {
+      const response = await fetch("https://api-project-management-kjbr.onrender.com/api/review/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

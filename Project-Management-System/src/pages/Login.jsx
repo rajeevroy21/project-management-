@@ -17,7 +17,7 @@ const Login = () => {
 
   const fetchUserRole = async (userId) => {
     try {
-      const response = await axios.get(`https://my-backend-api-ypqu.onrender.com/api/faculties/role/${userId}`);
+      const response = await axios.get(`https://api-project-management-kjbr.onrender.com/api/faculties/role/${userId}`);
       return response.data.role;
     } catch (error) {
       console.error('Error fetching user role:', error);
@@ -31,7 +31,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://my-backend-api-ypqu.onrender.com/api/students/login', {
+      const response = await axios.post('https://api-project-management-kjbr.onrender.com/api/students/login', {
         registrationNumber: formData.id,
         password: formData.password,
       });
@@ -52,7 +52,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://my-backend-api-ypqu.onrender.com/api/faculties/login', {
+      const response = await axios.post('https://api-project-management-kjbr.onrender.com/api/faculties/login', {
         facultyId: formData.id,
         password: formData.password,
       });

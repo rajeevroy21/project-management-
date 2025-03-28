@@ -34,7 +34,7 @@ export default function FacultySignup() {
     }
 
     try {
-      await axios.post('https://my-backend-api-ypqu.onrender.com/api/faculties', {
+      await axios.post('https://api-project-management-kjbr.onrender.com/api/faculties', {
         facultyId: formData.facultyId,
         password: formData.password,
         role: formData.role
