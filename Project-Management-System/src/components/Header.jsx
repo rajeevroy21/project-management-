@@ -136,39 +136,7 @@ const Header = () => {
                 </>
               )}
               <div className="pt-4 border-t border-purple-400">
-                {user ? (
-                  <>
-                    <span className="block text-white mb-2">{user.name}</span>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsMenuOpen(false);
-                      }}
-                      className="w-full bg-white text-[#6D28D9] font-semibold px-4 py-2 rounded-xl shadow-lg border-2 border-[#6D28D9] hover:bg-gray-100 transition-all duration-300"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <div className="space-y-2">
-                    <Link
-                      to="/signup"
-                      className="flex items-center justify-center space-x-2 bg-[#FFB900] text-[#1E293B] font-bold px-4 py-2 rounded-xl shadow-md border-2 border-[#FFB900] hover:bg-[#FFA500] w-full"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <UserPlus className="h-5 w-5" />
-                      <span>Signup</span>
-                    </Link>
-                    <Link
-                      to="/login"
-                      className="flex items-center justify-center space-x-2 bg-white text-[#1E3A8A] font-semibold px-4 py-2 rounded-xl shadow-md border border-[#1E3A8A] hover:bg-gray-100 w-full"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <LogIn className="h-5 w-5" />
-                      <span>Login</span>
-                    </Link>
-                  </div>
-                )}
+                console.log(user);
               </div>
             </div>
           </div>
