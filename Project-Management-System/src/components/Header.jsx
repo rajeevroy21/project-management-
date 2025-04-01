@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -19,15 +19,20 @@ const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userRole, setUserRole] = useState(localStorage.getItem('userRole')); // Track user role
+
+  useEffect(() => {
+    const storedUserRole = localStorage.getItem('userRole');
+    setUserRole(storedUserRole);
+  }, []); // Runs on component mount
 
   const handleLogout = () => {
     logout();
     localStorage.removeItem('userId');
     localStorage.removeItem('userRole');
+    setUserRole(null); // Update state after logout
     navigate('/');
   };
-
-  const userRole = localStorage.getItem('userRole');
 
   return (
     <header className="bg-gradient-to-r from-[#46c5e5] via-[#6D28D9] to-[#9333EA] text-white shadow-lg relative">
