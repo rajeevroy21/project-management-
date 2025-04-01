@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       setLoading(false); // If no token, stop loading
     }
-  }, []);
+  }, [user]);
 
   // Verify token and fetch user details
   const verifyToken = async (token) => {
