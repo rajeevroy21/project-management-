@@ -127,7 +127,18 @@ router.post('/', async(req, res) => {
         });
 
         const savedStudent = await newStudent.save();
-        res.status(201).json(savedStudent);
+        // Generate JWT token
+        const token = jwt.sign(
+            { studentId: savedStudent._id, registrationNumber: savedStudent.registrationNumber },
+            process.env.JWT_SECRET || 'your_jwt_secret_key',
+            { expiresIn: '1h' }
+        );
+
+        res.status(201).json({ 
+            message: 'Student registered successfully', 
+            student: savedStudent, 
+            token 
+        });
     } catch (error) {
         console.error('Error saving student:', error);
         res.status(500).json({ error: 'Server error while creating student' });
@@ -182,9 +193,9 @@ router.delete('/:id', async(req, res) => {
 });
 
 // Student login
-router.post('/login', async(req, res) => {
+router.post('/login', async (req, res) => {
     const { registrationNumber, password } = req.body;
-
+    console.log(registrationNumber,password);
     if (!registrationNumber || !password) {
         return res.status(400).json({ error: 'Registration number and password are required' });
     }
@@ -192,28 +203,33 @@ router.post('/login', async(req, res) => {
     try {
         const student = await Student.findOne({ registrationNumber });
         if (!student) {
-            return res.status(404).json({ error: 'Student not found' });
+            return res.status(400).json({ error: 'Invalid credentials' });
         }
 
         const isMatch = await bcrypt.compare(password, student.password);
         if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid password' });
+            return res.status(400).json({ error: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({
-                studentId: student._id,
-                registrationNumber: student.registrationNumber
-            },
-            process.env.JWT_SECRET || 'your_jwt_secret_key', { expiresIn: '1h' }
+        // Generate JWT token
+        const token = jwt.sign(
+            { studentId: student._id, registrationNumber: student.registrationNumber },
+            process.env.JWT_SECRET || 'your_jwt_secret_key',
+            { expiresIn: '1h' }
         );
+
+        console.log('Login successful:', student.registrationNumber);
+
+        // Send token in HTTP-only cookie for security (optional)
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 3600000 });
 
         res.status(200).json({
             message: 'Login successful',
-            token,
             student: {
-                id: student._id,
                 registrationNumber: student.registrationNumber,
-                batchTitle: student.batchTitle
+                section: student.section,
+                batchTitle: student.batchTitle,
+                batchId: student.batchId
             }
         });
     } catch (error) {

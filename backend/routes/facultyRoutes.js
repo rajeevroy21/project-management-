@@ -10,19 +10,27 @@ router.post('/', async (req, res) => {
     try {
         const { facultyId, password, role } = req.body;
 
-        // Hash the password before saving
+        if (!facultyId || !password || !role) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        // Check if faculty already exists
+        const existingFaculty = await Faculty.findOne({ facultyId });
+        if (existingFaculty) {
+            return res.status(400).json({ error: 'Faculty ID already exists' });
+        }
+
+        // Hash password before saving
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newFaculty = new Faculty({ facultyId, password: hashedPassword, role });
-        const savedFaculty = await newFaculty.save();
-        res.status(201).json(savedFaculty);
+        await newFaculty.save();
+
+        res.status(201).json({ message: 'Faculty created successfully', facultyId, role });
     } catch (error) {
-        if (error.code === 11000) {
-            res.status(400).json({ error: 'Faculty ID must be unique' });
-        } else {
-            res.status(500).json({ error: error.message });
-        }
+        console.error('Error creating faculty:', error);
+        res.status(500).json({ error: 'Server error while creating faculty' });
     }
 });
 
@@ -31,7 +39,11 @@ router.post('/login', async (req, res) => {
     try {
         const { facultyId, password } = req.body;
 
-        // Find faculty by facultyId
+        if (!facultyId || !password) {
+            return res.status(400).json({ error: 'Faculty ID and password are required' });
+        }
+
+        // Find faculty by ID
         const faculty = await Faculty.findOne({ facultyId });
         if (!faculty) {
             return res.status(400).json({ error: 'Invalid credentials' });
@@ -43,14 +55,24 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
 
-        // Generate a JWT token
-        const payload = { facultyId: faculty.facultyId, role: faculty.role, id: faculty._id };
-        const token = jwt.sign(payload, 'your_jwt_secret_key', { expiresIn: '1h' });
+        // Generate JWT token
+        const token = jwt.sign(
+            { facultyId: faculty.facultyId, role: faculty.role, id: faculty._id },
+            process.env.JWT_SECRET || 'your_jwt_secret_key',
+            { expiresIn: '1h' }
+        );
+         alert("connected");
+        console.log(`Faculty ${facultyId} logged in successfully`);
 
-        // Send the token as the response
-        res.status(200).json({ token });
+        // Send token and faculty details in response
+        res.status(200).json({
+            message: 'Login successful',
+            token,
+            faculty: { facultyId: faculty.facultyId, role: faculty.role }
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Login error:', error);
+        res.status(500).json({ error: 'Server error during login' });
     }
 });
 router.get('/role/:userId', async (req, res) => {
