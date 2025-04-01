@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
             process.env.JWT_SECRET || 'your_jwt_secret_key',
             { expiresIn: '1h' }
         );
-         alert("connected");
+        // alert("connected");
         console.log(`Faculty ${facultyId} logged in successfully`);
 
         // Send token and faculty details in response
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
         });
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ error: 'Server error during login' });
+        res.status(500).json({ error: 'Server error during login'});
     }
 });
 router.get('/role/:userId', async (req, res) => {

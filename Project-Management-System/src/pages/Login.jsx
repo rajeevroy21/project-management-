@@ -56,6 +56,7 @@ const Login = () => {
         facultyId: formData.id,
         password: formData.password,
       });
+       
 
       login(response.data.token);
       localStorage.setItem('userId', formData.id);
