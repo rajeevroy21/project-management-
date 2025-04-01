@@ -7,16 +7,16 @@ const AuthContext = createContext(undefined);
 // AuthProvider Component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);  // Added loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       verifyToken(token);
     } else {
-      setLoading(false); // If no token, stop loading
+      setLoading(false);
     }
-  }, [user]);
+  }, []);
 
   // Verify token and fetch user details
   const verifyToken = async (token) => {
@@ -25,23 +25,34 @@ export const AuthProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUser(response.data);
+      
+      // Store userRole in localStorage
+      if (response.data.role) {
+        localStorage.setItem('userRole', response.data.role);
+      }
+      return response.data;
     } catch (error) {
       console.error('Token verification failed:', error);
-      logout(); 
+      logout();
     } finally {
-      setLoading(false); // Stop loading after checking
+      setLoading(false);
     }
   };
 
   // Login function (stores token & verifies user)
   const login = async (token) => {
     localStorage.setItem('token', token);
-    await verifyToken(token);
+    const userData = await verifyToken(token);
+    
+    if (userData && userData.role) {
+      localStorage.setItem('userRole', userData.role);
+    }
   };
 
   // Logout function (removes token & clears user)
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userRole'); // Remove userRole on logout
     setUser(null);
   };
 
