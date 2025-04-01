@@ -37,6 +37,7 @@ const Login = () => {
       });
 
       login(response.data.token);
+      localStorage.setItem("token",response.data.token);
       localStorage.setItem('userId', formData.id);
       navigate('/');
     } catch (err) {
@@ -59,6 +60,7 @@ const Login = () => {
        
 
       login(response.data.token);
+      localStorage.setItem("token",response.data.token);
       localStorage.setItem('userId', formData.id);
       const userRole = await fetchUserRole(formData.id);
       if (userRole) {
